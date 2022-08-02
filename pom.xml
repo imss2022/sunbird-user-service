@@ -19,4 +19,16 @@
         <module>user-org-service</module>
         <module>user-org-util</module>
     </modules>
+    <distributionManagement>
+    <repository>
+         <id>nexus</id>
+         <name>nexus</name>
+         <url>http://nexus-sunbird-ci.apps.ocp4.imss.com/repository/maven-releases/</url>
+    </repository>
+    <snapshotRepository>
+         <id>nexus</id>
+         <name>nexus</name>
+         <url>http://nexus-sunbird-ci.apps.ocp4.imss.com/repository/maven-snapshots/</url>
+    </snapshotRepository>
+</distributionManagement>
 </project>
