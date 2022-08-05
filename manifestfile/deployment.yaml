@@ -24,7 +24,7 @@ spec:
         - name: sunbird-user-service
           image: 'image-registry.openshift-image-registry.svc:5000/sunbird-cd/sunbird-user-service'
           ports:
-            - containerPort: 7008
+            - containerPort: 6060
               protocol: TCP
           resources: {}
           volumeMounts:
