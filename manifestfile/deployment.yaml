@@ -1,28 +1,28 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: auth-core
+  name: sunbird-user-service
   namespace: sunbird-cd
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: auth-core
+      app: sunbird-user-service
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: auth-core
+        app: sunbird-user-service
       annotations:
         sidecar.istio.io/inject: 'true'
     spec:
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: auth-core
+            claimName: sunbird-user-service
       containers:
-        - name: auth-core
-          image: 'image-registry.openshift-image-registry.svc:5000/insurkart/auth-core'
+        - name: sunbird-user-service
+          image: 'image-registry.openshift-image-registry.svc:5000/sunbird-cd/sunbird-user-service'
           ports:
             - containerPort: 7008
               protocol: TCP
