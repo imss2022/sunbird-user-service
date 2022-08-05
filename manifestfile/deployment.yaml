@@ -1,1 +1,47 @@
-aa
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: auth-core
+  namespace: sunbird-cd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-core
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: auth-core
+      annotations:
+        sidecar.istio.io/inject: 'true'
+    spec:
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: auth-core
+      containers:
+        - name: auth-core
+          image: 'image-registry.openshift-image-registry.svc:5000/insurkart/auth-core'
+          ports:
+            - containerPort: 7008
+              protocol: TCP
+          resources: {}
+          volumeMounts:
+            - name: data
+              mountPath: logs
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
